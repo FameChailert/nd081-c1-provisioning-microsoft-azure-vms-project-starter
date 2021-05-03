@@ -32,7 +32,7 @@ class Config(object):
 
     CLIENT_ID = "97043f10-b045-4903-99b8-25e4815ae6f6"
 
-    REDIRECT_PATH = "https://github.com/FameChailert/nd081-c1-provisioning-microsoft-azure-vms-project-starter/getAtoken"  # Used to form an absolute URL; must match to app's redirect_uri set in AAD
+    REDIRECT_PATH = "/getAtoken"  # Used to form an absolute URL; must match to app's redirect_uri set in AAD
 
     # You can find the proper permission names from this document
     # https://docs.microsoft.com/en-us/graph/permissions-reference
