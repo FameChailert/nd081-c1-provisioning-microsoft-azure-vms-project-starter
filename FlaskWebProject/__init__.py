@@ -13,10 +13,10 @@ app.config.from_object(Config)
 # TODO: Add any logging levels and handlers with app.logger
 
 wsgi_app = app.wsgi_app
-app.logger.setLevel(logging.WARNING)
-streamHandler=logging.StreamHandler()
-streamHandler.setLevel(logging.WARNING)
-app.logger.addHandler(stramHandler)
+#app.logger.setLevel(logging.WARNING)
+#streamHandler=logging.StreamHandler()
+#streamHandler.setLevel(logging.WARNING)
+#app.logger.addHandler(stramHandler)
 
 Session(app)
 db = SQLAlchemy(app)
