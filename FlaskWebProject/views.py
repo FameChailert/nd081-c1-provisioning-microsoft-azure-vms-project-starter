@@ -82,6 +82,7 @@ def authorized():
     if request.args.get('state') != session.get("state"):
         return redirect(url_for("home"))  # No-OP. Goes back to Index page
     if "error" in request.args:  # Authentication/Authorization failure
+        app.logger.info('MSAL Login failed', user.username)
         return render_template("auth_error.html", result=request.args)
     if request.args.get('code'):
         cache = _load_cache()
@@ -99,6 +100,7 @@ def authorized():
         # Here, we'll use the admin username for anyone who is authenticated by MS
         user = User.query.filter_by(username="admin").first()
         login_user(user)
+        app.logger.info('Admin logged in with MSAL', user.username)
         _save_cache(cache)
     return redirect(url_for('home'))
 
@@ -138,8 +140,8 @@ def _build_msal_app(cache=None, authority=None):
 
 def _build_auth_url(authority=None, scopes=None, state=None):
     # TODO: Return the full Auth Request URL with appropriate Redirect URI
-    return _build_msal_app(authority=authority).get_authorization_request_url(
-        scopes or [],
-        state=state or str(uuid.uuid4()),
-        redirect_uri=url_for("authorized", _external=True, _scheme='https'))
+    return _build_msal_app().get_authorization_request_url(
+        scopes,
+        state=state,
+        redirect_uri=url_for("authorized", _external=True, _scheme="https")
     #return None
